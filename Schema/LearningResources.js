@@ -3,9 +3,7 @@ const { Schema } = mongoose;
 
 const learningResources = new Schema({
     category: {
-        coding: String,
-        maths: String,
-        electronics:  String
+        type: String, enum: ['coding', ' maths', 'electronics']
     },
     ages: [Number],
     title:  String,
