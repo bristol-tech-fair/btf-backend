@@ -1,8 +1,6 @@
 import { Router } from 'express'
 import controllers from './event.controllers'
 
-console.log(typeof(controllers.getOne))
-console.log(controllers.getOne)
 const router = Router()
 
 // /api/event
@@ -14,6 +12,8 @@ router
 router
   .route('/:id')
   .get(controllers.getOne)
+  .put(controllers.upload,controllers.updateOne)
+  .delete(controllers.deleteOne)
 
 
 export default router
