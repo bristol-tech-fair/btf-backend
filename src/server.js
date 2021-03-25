@@ -17,6 +17,7 @@ db.on('error', err => console.log(err));
 db.once('open', () => console.log(`Connected to database`));
 
 // middleware
+app.use(express.json());
 
 // routes
 app.use('/api/post', postRouter);
