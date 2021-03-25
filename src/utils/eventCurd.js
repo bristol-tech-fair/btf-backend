@@ -39,9 +39,11 @@ export const getMany = model => async (req, res) => {
 
 
 export const createOne = model => async (req, res) => {
-    const host = req.get('host');
-    const eventImg = `${host}/${req.file.path}`;
     try {
+      if(req.file) { 
+        const host = req.get('host');
+        var eventImg = `${host}/${req.file.path}`;
+      }
       const doc = await model.create({ ...req.body, eventImg })
       res.status(201).json({ data: doc })
     } catch (e) {
@@ -54,7 +56,7 @@ export const createOne = model => async (req, res) => {
 
 export const updateOne = model => async (req, res) => {
   try {
-    if(req.file){      
+    if(req.file) {      
       const host = req.get('host');
       req.body["eventImg"]=`${host}/${req.file.path}`;
     }
@@ -92,13 +94,10 @@ export const deleteOne = model => async (req, res) => {
       return res.status(400).end()
     }
 
-    if(deletedDoc.eventImg){
+    if(req.file){
       const file = deletedDoc.eventImg.split('/')[1];
-      console.log(file);
       fs.unlinkSync(file);
     }
-    console.log(deletedDoc);
-    console.log(typeof(deletedDoc));
     res.status(200).json({ data: deletedDoc })
   } catch (e) {
     console.error(e)
