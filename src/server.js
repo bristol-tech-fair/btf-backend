@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import express from 'express';
 import mongoose from 'mongoose';
 import postRouter from './resources/post/post.router';
