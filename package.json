@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Backend for Bristol Tech Fair.",
   "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir dist",
+    "start": "node dist/server.js"
+  },
   "repository": "git@github.com:bristol-tech-fair/btf-backend.git",
   "author": "Rob Squires <rsquires@sans.org>",
   "license": "MIT",
