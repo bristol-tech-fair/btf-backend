@@ -1,4 +1,4 @@
 import crudControllers from '../../utils/crud';
-import { Post } from './post.model';
+import Post from './post.model';
 
 export default crudControllers(Post);
