@@ -20,7 +20,7 @@ db.once('open', () => console.log(`Connected to database`));
 app.use(express.json());
 
 // routes
-app.use('/api/post', postRouter);
+app.use('/api/posts', postRouter);
 
 // start the server
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
