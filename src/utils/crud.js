@@ -52,7 +52,7 @@ const deleteOne = model => async (req, res) => {
   }
 };
 
-export default crudControllers = model => {
+const crudControllers = model => {
   return {
     getMany: getMany(model),
     getOne: getOne(model),
@@ -61,3 +61,5 @@ export default crudControllers = model => {
     deleteOne: deleteOne(model)
   };
 };
+
+export default crudControllers;
