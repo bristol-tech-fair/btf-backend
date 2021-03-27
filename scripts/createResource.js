@@ -4,7 +4,7 @@ const name = process.argv[2];
 const nameLowerCase = name.toLowerCase();
 const dirPath = `./src/resources/${nameLowerCase}`;
 
-fs.mkdir(dirPath, { recursive: true }, err => {
+fs.mkdir(dirPath, err => {
   if (err) {
     throw err;
   } else {
