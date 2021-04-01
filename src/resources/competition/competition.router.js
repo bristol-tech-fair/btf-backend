@@ -7,7 +7,7 @@ const router = express.Router();
 router
   .route('/')
   .get(controller.getMany)
-  .competition(controller.createOne);
+  .post(controller.createOne);
 
 // /api/competitions/:id
 router
