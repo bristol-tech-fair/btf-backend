@@ -7,7 +7,7 @@ const router = express.Router();
 router
   .route('/')
   .get(controller.getMany)
-  .event(controller.createOne);
+  .post(controller.createOne);
 
 // /api/events/:id
 router
