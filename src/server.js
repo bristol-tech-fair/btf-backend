@@ -1,6 +1,8 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import morgan from 'morgan';
 import postRouter from './resources/post/post.router';
+import eventRouter from './resources/event/event.router';
 
 const app = express();
 
@@ -18,9 +20,12 @@ db.once('open', () => console.log(`Connected to database`));
 
 // middleware
 app.use(express.json());
+app.use(morgan('dev'));
+app.use('/uploads',express.static('uploads'))
 
 // routes
 app.use('/api/post', postRouter);
+app.use('/api/event', eventRouter);
 
 // start the server
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

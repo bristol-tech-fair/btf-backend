@@ -1,3 +1,15 @@
+import fs from 'fs';
+import multer from 'multer';
+
+const storage = multer.diskStorage({
+  destination: './uploads',
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  }
+});
+
+const upload = multer({ storage: storage }).single("image");
+
 // Get Many
 const getMany = model => async (req, res) => {
   try {
@@ -25,7 +37,13 @@ const getOne = model => async (req, res) => {
 // Create One
 const createOne = model => async (req, res) => {
   try {
-    const doc = await model.create(req.body);
+    console.log('here');
+    console.log(req.body);
+    if (req.file) {
+      const host = req.get('host');
+      var image = `${host}/${req.file.path}`;
+    }
+    const doc = await model.create({ ...req.body, image });
     res.status(201).json({ data: doc });
   } catch (err) {
     res.status(500).send(err.message);
@@ -35,6 +53,10 @@ const createOne = model => async (req, res) => {
 // UPDATE ONE
 const updateOne = model => async (req, res) => {
   try {
+    if (req.file) {
+      const host = req.get('host');
+      req.body["image"] = `${host}/${req.file.path}`;
+    }
     const doc = await model.updateOne({ _id: req.params.id }, req.body);
     res.json({ msg: `Resource ID: ${req.params.id} updated`, data: doc });
   } catch (err) {
@@ -46,6 +68,10 @@ const updateOne = model => async (req, res) => {
 const deleteOne = model => async (req, res) => {
   try {
     const doc = await model.deleteOne({ _id: req.params.id });
+    if (req.file) {
+      const file = deletedDoc.image.split('/')[1];
+      fs.unlinkSync(file);
+    }
     res.json({ msg: `Resource ID: ${req.params.id} deleted`, data: doc });
   } catch (err) {
     res.status(500).send(err.message);
@@ -58,7 +84,8 @@ const crudControllers = model => {
     getOne: getOne(model),
     createOne: createOne(model),
     updateOne: updateOne(model),
-    deleteOne: deleteOne(model)
+    deleteOne: deleteOne(model),
+    upload,
   };
 };
 
