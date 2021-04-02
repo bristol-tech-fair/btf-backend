@@ -37,8 +37,6 @@ const getOne = model => async (req, res) => {
 // Create One
 const createOne = model => async (req, res) => {
   try {
-    console.log('here');
-    console.log(req.body);
     if (req.file) {
       const host = req.get('host');
       var image = `${host}/${req.file.path}`;
