@@ -5,7 +5,11 @@ const groupSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  body: {
+  image: {
+    type: String,
+    required: true
+  },
+  groupUrl: {
     type: String,
     required: true
   }
