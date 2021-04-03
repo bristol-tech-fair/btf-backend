@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import postRouter from './resources/post/post.router';
+import groupRouter from './resources/group/group.router';
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(express.json());
 
 // routes
 app.use('/api/post', postRouter);
+app.use('/api/group', groupRouter);
 
 // start the server
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
