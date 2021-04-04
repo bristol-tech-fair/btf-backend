@@ -27,8 +27,7 @@ const learningResourceSchema = new mongoose.Schema({
   },
   body: String,
   tags: {
-    type: [String],
-    required: true
+    type: [String]
   }
 });
 
