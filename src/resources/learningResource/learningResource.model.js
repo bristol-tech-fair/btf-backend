@@ -6,12 +6,8 @@ const learningResourceSchema = new mongoose.Schema({
     enum: ['Coding', 'Maths', 'Electronics'],
     required: true
   },
-  minAge: {
-    type: Number,
-    required: true
-  },
-  maxAge: {
-    type: Number,
+  ages: {
+    type: String,
     required: true
   },
   title: {
@@ -27,7 +23,8 @@ const learningResourceSchema = new mongoose.Schema({
   },
   body: String,
   tags: {
-    type: [String]
+    type: [String],
+    required: true
   }
 });
 
