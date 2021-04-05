@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "babel src --out-dir dist",
-    "start": "nodemon --exec babel-node -r dotenv/config ./src/server.js"
+    "start": "nodemon --exec babel-node -r dotenv/config ./src/server.js",
+    "resource": "node scripts/createResource.js"
   },
   "repository": "git@github.com:bristol-tech-fair/btf-backend.git",
   "author": "Rob Squires <rsquires@sans.org>",

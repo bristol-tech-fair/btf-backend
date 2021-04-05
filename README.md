@@ -40,4 +40,8 @@ This transpiles the src code using [Babel](https://babeljs.io/docs/en/), which a
 
 Your app is ready to be deployed!
 
+### `yarn resource <resource-name>`
+
+Our API resource generator script, replace `<resource-name>` with the actual name of your resource (e.g. `post`). This will take care of creating the correct files for you.
+
 Any questions please start on discussion with the [lead team](https://github.com/orgs/bristol-tech-fair/teams/lead-team).
