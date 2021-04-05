@@ -21,7 +21,7 @@ db.once('open', () => console.log(`Connected to database`));
 app.use(express.json());
 
 // routes
-app.use('/api/post', postRouter);
+app.use('/api/posts', postRouter);
 app.use('/api/learningResources', learningResourceRouter);
 
 // start the server
