@@ -25,7 +25,7 @@ app.use('/uploads',express.static('uploads'))
 
 // routes
 app.use('/api/post', postRouter);
-app.use('/api/event', eventRouter);
+app.use('/api/events', eventRouter);
 
 // start the server
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
