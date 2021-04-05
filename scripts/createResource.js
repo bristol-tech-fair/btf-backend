@@ -43,7 +43,7 @@ const router = express.Router();
 router
   .route('/')
   .get(controller.getMany)
-  .${nameLowerCase}(controller.createOne);
+  .post(controller.createOne);
 
 // /api/${nameLowerCase}s/:id
 router
