@@ -22,7 +22,7 @@ app.use(express.json());
 
 // routes
 app.use('/api/post', postRouter);
-app.use('/api/group', groupRouter);
+app.use('/api/groups', groupRouter);
 
 // start the server
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
