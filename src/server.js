@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import morgan from 'morgan';
 import postRouter from './resources/post/post.router';
 import eventRouter from './resources/event/event.router';
+import competitionRouter from './resources/competition/competition.router';
 import learningResourceRouter from './resources/learningResource/learningResource.router';
 
 const app = express();
@@ -27,6 +28,7 @@ app.use('/uploads',express.static('uploads'))
 // routes
 app.use('/api/posts', postRouter);
 app.use('/api/events', eventRouter);
+app.use('/api/competitions', competitionRouter);
 app.use('/api/learningResources', learningResourceRouter);
 
 // start the server
