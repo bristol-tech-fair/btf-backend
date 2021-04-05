@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import postRouter from './resources/post/post.router';
+import competitionRouter from './resources/competition/competition.router';
 import learningResourceRouter from './resources/learningResource/learningResource.router';
 
 const app = express();
@@ -22,6 +23,7 @@ app.use(express.json());
 
 // routes
 app.use('/api/posts', postRouter);
+app.use('/api/competitions', competitionRouter);
 app.use('/api/learningResources', learningResourceRouter);
 
 // start the server
