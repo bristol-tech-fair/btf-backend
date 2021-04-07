@@ -1,5 +1,5 @@
 import express from 'express';
-import controller from './competition.controller';
+import controller from './podcast.controller';
 
 const router = express.Router();
 
