@@ -10,7 +10,7 @@ To run this project you will need Node.js and Yarn v1 installed.
 
 2. Install Yarn v1 - [https://classic.yarnpkg.com/en/docs/install/](https://classic.yarnpkg.com/en/docs/install/#mac-stable)
 
-Node handles our build tools, yarn is our package manager and used to run scripts.
+Node is our runtime for the server, yarn is our package manager and used to run scripts.
 
 ## Available Scripts
 
