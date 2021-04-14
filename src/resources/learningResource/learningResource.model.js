@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const learningResourceSchema = new mongoose.Schema({
   category: {
     type: String,
-    enum: ['Coding', 'Maths', 'Electronics'],
+    enum: ['Coding', 'Maths', 'Electronics', 'Design', 'Robotics'],
     required: true
   },
   ages: {
@@ -24,7 +24,13 @@ const learningResourceSchema = new mongoose.Schema({
   body: String,
   tags: {
     type: [String]
-  }
+  },
+  attachments: [{
+    _id: String,
+    fileType: String,
+    originalFileName: String,
+    url: String
+  }]
 });
 
 export default mongoose.model('learningResource', learningResourceSchema);
