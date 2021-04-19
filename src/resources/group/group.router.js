@@ -5,13 +5,13 @@ const router = express.Router();
 
 // /api/groups
 router
-  .route('/')
+  .route('/groups')
   .get(controller.getMany)
   .post(controller.createOne);
 
 // /api/groups/:id
 router
-  .route('/:id')
+  .route('/groups/:id')
   .get(controller.getOne)
   .put(controller.updateOne)
   .delete(controller.deleteOne);

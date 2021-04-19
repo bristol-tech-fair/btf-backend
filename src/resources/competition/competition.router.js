@@ -5,13 +5,13 @@ const router = express.Router();
 
 // /api/competitions
 router
-  .route('/')
+  .route('/competitions')
   .get(controller.getMany)
   .post(controller.createOne);
 
 // /api/competitions/:id
 router
-  .route('/:id')
+  .route('/competitions/:id')
   .get(controller.getOne)
   .put(controller.updateOne)
   .delete(controller.deleteOne);
