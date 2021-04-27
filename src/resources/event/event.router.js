@@ -7,13 +7,13 @@ const router = express.Router();
 router
   .route('/')
   .get(controller.getMany)
-  .post(controller.upload,controller.createOne);
+  .post(controller.createOne);
 
 // /api/events/:id
 router
   .route('/:id')
   .get(controller.getOne)
-  .put(controller.upload,controller.updateOne)
+  .put(controller.updateOne)
   .delete(controller.deleteOne);
 
 export default router;
