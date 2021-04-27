@@ -19,11 +19,7 @@ const eventSchema = new mongoose.Schema({
       message: input => `${input} must be greater than or equal to the current date!`
     }
   },
-  body:String,
-  facebook: String,
-  linkdin: String,
-  twitter: String,
-  bookmark : String
+  body:String
 });
 
 export default mongoose.model('event', eventSchema);
