@@ -1,17 +1,17 @@
 import express from 'express';
-import controller from './event.controller';
+import controller from './club.controller';
 
 const router = express.Router();
 
-// /api/events
+// /api/clubs
 router
-  .route('/events')
+  .route('/clubs')
   .get(controller.getMany)
   .post(controller.createOne);
 
-// /api/events/:id
+// /api/clubs/:id
 router
-  .route('/events/:id')
+  .route('/clubs/:id')
   .get(controller.getOne)
   .put(controller.updateOne)
   .delete(controller.deleteOne);

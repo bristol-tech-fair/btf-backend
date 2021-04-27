@@ -41,13 +41,13 @@ const router = express.Router();
 
 // /api/${nameLowerCase}s
 router
-  .route('/')
+  .route('/${nameLowerCase}s')
   .get(controller.getMany)
   .post(controller.createOne);
 
 // /api/${nameLowerCase}s/:id
 router
-  .route('/:id')
+  .route('/${nameLowerCase}s/:id')
   .get(controller.getOne)
   .put(controller.updateOne)
   .delete(controller.deleteOne);
