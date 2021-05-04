@@ -5,13 +5,13 @@ const router = express.Router();
 
 // /api/podcast
 router
-  .route('/')
+  .route('/podcasts')
   .get(controller.getMany)
   .post(controller.createOne);
 
 // /api/podcast/:id
 router
-  .route('/:id')
+  .route('/podcasts/:id')
   .get(controller.getOne)
   .put(controller.updateOne)
   .delete(controller.deleteOne);
