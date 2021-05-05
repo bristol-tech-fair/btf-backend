@@ -25,7 +25,7 @@ const getOne = model => async (req, res) => {
 // Create One
 const createOne = model => async (req, res) => {
   try {
-    const doc = await model.create({ ...req.body, image });
+    const doc = await model.create(req.body);
     res.status(201).json({ data: doc });
   } catch (err) {
     res.status(500).send(err.message);
