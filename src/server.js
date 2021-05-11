@@ -4,6 +4,7 @@ import postRouter from './resources/post/post.router';
 import groupRouter from './resources/group/group.router';
 import competitionRouter from './resources/competition/competition.router';
 import learningResourceRouter from './resources/learningResource/learningResource.router';
+import clubRouter from './resources/club/club.router';
 
 
 const app = express();
@@ -28,6 +29,7 @@ app.use('/api/posts', postRouter);
 app.use('/api/groups', groupRouter);
 app.use('/api/competitions', competitionRouter);
 app.use('/api/learningResources', learningResourceRouter);
+app.use('/api/clubs', clubRouter);
 
 
 // start the server

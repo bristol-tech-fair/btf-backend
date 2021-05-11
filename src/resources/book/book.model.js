@@ -2,16 +2,16 @@ import mongoose from 'mongoose';
 
 const bookSchema = new mongoose.Schema({
   image: {
-    type: Image,
-    required: true,
+    type: String,
+    required: true
   },
   link: {
     type: String,
-    required: true,  
+    required: true  
   },
   title: {
     type: String,
-    required: true,
+    required: true
   },
   author: {
     type: String,
@@ -20,3 +20,4 @@ const bookSchema = new mongoose.Schema({
 });
 
 export default mongoose.model('book', bookSchema);
+
