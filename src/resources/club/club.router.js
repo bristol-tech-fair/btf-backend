@@ -1,17 +1,17 @@
 import express from 'express';
-import controller from './group.controller';
+import controller from './club.controller';
 
 const router = express.Router();
 
-// /api/groups
+// /api/clubs
 router
-  .route('/groups')
+  .route('/clubs')
   .get(controller.getMany)
   .post(controller.createOne);
 
-// /api/groups/:id
+// /api/clubs/:id
 router
-  .route('/groups/:id')
+  .route('/clubs/:id')
   .get(controller.getOne)
   .put(controller.updateOne)
   .delete(controller.deleteOne);

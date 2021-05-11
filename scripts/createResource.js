@@ -4,14 +4,6 @@ const name = process.argv[2];
 const nameLowerCase = name.toLowerCase();
 const dirPath = `./src/resources/${nameLowerCase}`;
 
-fs.mkdir(dirPath, err => {
-  if (err) {
-    throw err;
-  } else {
-    console.log(`Directory ${dirPath} created`);
-  }
-});
-
 const controller = `import crudControllers from '../../utils/crud';
 import ${name} from './${nameLowerCase}.model';
 
@@ -41,13 +33,13 @@ const router = express.Router();
 
 // /api/${nameLowerCase}s
 router
-  .route('/')
+  .route('/${nameLowerCase}s')
   .get(controller.getMany)
   .post(controller.createOne);
 
 // /api/${nameLowerCase}s/:id
 router
-  .route('/:id')
+  .route('/${nameLowerCase}s/:id')
   .get(controller.getOne)
   .put(controller.updateOne)
   .delete(controller.deleteOne);
@@ -55,29 +47,43 @@ router
 export default router;
 `;
 
-// make controller.js file
-fs.writeFile(`${dirPath}/${nameLowerCase}.controller.js`, controller, err => {
-  if (err) {
-    throw err;
-  } else {
-    console.log(`File ${nameLowerCase}.controller.js created`);
-  }
-});
+async function makeDirAndFiles() {
+  await Promise.resolve(
+    fs.mkdir(dirPath, err => {
+      if (err) {
+        throw err;
+      } else {
+        console.log(`Directory ${dirPath} created`);
+      }
+    })
+  );
 
-// make model.js file
-fs.writeFile(`${dirPath}/${nameLowerCase}.model.js`, model, err => {
-  if (err) {
-    throw err;
-  } else {
-    console.log(`File ${nameLowerCase}.model.js created`);
-  }
-});
+  // make controller.js file
+  fs.writeFile(`${dirPath}/${nameLowerCase}.controller.js`, controller, err => {
+    if (err) {
+      throw err;
+    } else {
+      console.log(`File ${nameLowerCase}.controller.js created`);
+    }
+  });
 
-// make router.js file
-fs.writeFile(`${dirPath}/${nameLowerCase}.router.js`, router, err => {
-  if (err) {
-    throw err;
-  } else {
-    console.log(`File ${nameLowerCase}.router.js created`);
-  }
-});
+  // make model.js file
+  fs.writeFile(`${dirPath}/${nameLowerCase}.model.js`, model, err => {
+    if (err) {
+      throw err;
+    } else {
+      console.log(`File ${nameLowerCase}.model.js created`);
+    }
+  });
+
+  // make router.js file
+  fs.writeFile(`${dirPath}/${nameLowerCase}.router.js`, router, err => {
+    if (err) {
+      throw err;
+    } else {
+      console.log(`File ${nameLowerCase}.router.js created`);
+    }
+  });
+}
+
+makeDirAndFiles();

@@ -1,17 +1,17 @@
 import express from 'express';
-import controller from './group.controller';
+import controller from './event.controller';
 
 const router = express.Router();
 
-// /api/groups
+// /api/events
 router
-  .route('/groups')
+  .route('/events')
   .get(controller.getMany)
   .post(controller.createOne);
 
-// /api/groups/:id
+// /api/events/:id
 router
-  .route('/groups/:id')
+  .route('/events/:id')
   .get(controller.getOne)
   .put(controller.updateOne)
   .delete(controller.deleteOne);
