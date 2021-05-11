@@ -5,6 +5,7 @@ import learningResourceRouter from './learningResource/learningResource.router';
 import clubRouter from './club/club.router';
 import podcastRouter from './podcast/podcast.router';
 import eventRouter from './event/event.router';
+import bookRouter from './book/book.router';
 
 const routes = [
   postRouter,
@@ -13,7 +14,8 @@ const routes = [
   learningResourceRouter,
   clubRouter,
   podcastRouter,
-  eventRouter
+  eventRouter,
+  bookRouter
 ];
 
 export default routes;
