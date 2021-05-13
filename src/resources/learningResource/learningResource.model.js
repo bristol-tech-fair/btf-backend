@@ -25,12 +25,13 @@ const learningResourceSchema = new mongoose.Schema({
   tags: {
     type: [String]
   },
-  attachments: [{
-    _id: String,
-    fileType: String,
-    originalFileName: String,
-    url: String
-  }]
+  attachments: [
+    {
+      _id: String,
+      resource_type: String,
+      secure_url: String
+    }
+  ]
 });
 
 export default mongoose.model('learningResource', learningResourceSchema);

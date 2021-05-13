@@ -1,61 +1,141 @@
 import cloudinary from 'cloudinary';
-import { supportedFileFormats } from '../middleware/fileParser';
 
-// TODO   Extend this service to upload files into folders based
-// TODO   on user id, once authentication is implemented.
+class CloudinaryService {
+  static instance;
+  rootFolder;
 
-const folder = 'bristol-tech-fair';
-
-const addFiles = async (files) => {
-  const metadata = [];
-
-  for (const file of files) {
-    const fileType = supportedFileFormats[file.mimetype];
-
-    const result = await cloudinary.v2.uploader.upload(file.path, {
-      folder: `${folder}/${fileType}s`
-    });
-
-    metadata.push({
-      _id: result.public_id,
-      fileType,
-      originalFileName: file.originalname,
-      url: result.secure_url
-    });
+  constructor() {
+    this.rootFolder = 'bristol-tech-fair';
   }
 
-  return metadata;
-}
-
-const updateFiles = async (newMetadata, oldMetadata, files) => {
-  const updatedMetadata = [];
-
-  if (newMetadata !== undefined) {
-    const newMetadataIds = new Set(newMetadata.map(metadatum => metadatum._id));
-    const toRemove = oldMetadata.filter(metadatum => !(newMetadataIds.has(metadatum._id)));
-    await removeFiles(toRemove);
-    updatedMetadata.push(...newMetadata);
-  } else {
-    // If we don't have any new metadata, we want to preserve the old
-    updatedMetadata.push(...oldMetadata);
+  static getInstance() {
+    if (CloudinaryService.instance instanceof CloudinaryService) {
+      return CloudinaryService.instance;
+    } else {
+      cloudinary.v2.config({
+        cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+        api_key: process.env.CLOUDINARY_API_KEY,
+        api_secret: process.env.CLOUDINARY_API_SECRET
+      });
+      CloudinaryService.instance = new CloudinaryService();
+      return CloudinaryService.instance;
+    }
   }
 
-  if (files !== undefined) {
-    const uploadedFileMetadata = await addFiles(files);
-    updatedMetadata.push(...uploadedFileMetadata);
+  async upload(files, resourceId) {
+    const uploadOptions = {
+      folder: `${this.rootFolder}/${resourceId}`,
+      use_filename: true,
+      resource_type: 'auto'
+    };
+
+    try {
+      const metadata = await Promise.all(
+        files.map(async file => {
+          const {
+            secure_url,
+            public_id,
+            resource_type
+          } = await cloudinary.v2.uploader.upload(file.path, uploadOptions);
+
+          console.log(`Uploaded ${file.filename}`);
+
+          return { secure_url, _id: public_id, resource_type };
+        })
+      );
+
+      return metadata;
+    } catch (err) {
+      throw new Error(`Cloudinary upload error: ${err.message}`);
+    }
   }
 
-  return updatedMetadata;
-}
+  async findByResourceId(resourceId) {
+    try {
+      const res = await cloudinary.v2.search
+        .expression(`folder:${this.rootFolder}/${resourceId}/*`)
+        .execute();
 
-const removeFiles = async (metadata) => {
-  for (const metadatum of metadata) {
-    await cloudinary.v2.uploader.destroy(metadatum._id);
+      if (res.resources.length > 0) {
+        const metadata = res.resources.map(datum => {
+          return {
+            _id: datum.public_id,
+            secure_url: datum.secure_url,
+            resource_type: datum.resource_type
+          };
+        });
+        return metadata;
+      }
+
+      return [];
+    } catch (err) {
+      throw new Error(
+        `Cloudinary could not find files for resource ${resourceId}: ${err.message}`
+      );
+    }
+  }
+
+  async findByIds(resourceId, ids) {
+    try {
+      let metadata = await this.findByResourceId(resourceId);
+      metadata = metadata.filter(datum => ids.includes(datum._id));
+      return metadata;
+    } catch (err) {
+      throw new Error(
+        `Cloudinary could not find files for resource ${resourceId}: ${err.message}`
+      );
+    }
+  }
+
+  async updateFiles(previousMetadata, idsToDelete, resourceId, filesToUpload) {
+    let metadataForUpdate = previousMetadata || [];
+
+    // Deleting files
+    if (idsToDelete !== undefined && idsToDelete.length > 0) {
+      const metadataOfFilesForDeletion = await this.findByIds(
+        resourceId,
+        idsToDelete
+      );
+      await this.deleteByMetadata(metadataOfFilesForDeletion);
+      // Discard metadata for deleted files
+      metadataForUpdate = metadataForUpdate.filter(
+        datum => !idsToDelete.includes(datum._id)
+      );
+    }
+
+    // Uploading files
+    if (filesToUpload !== undefined && filesToUpload.length > 0) {
+      const newMetadata = await this.upload(filesToUpload, resourceId);
+      metadataForUpdate.push(...newMetadata);
+    }
+
+    return metadataForUpdate;
+  }
+
+  async deleteByMetadata(metadata) {
+    try {
+      await Promise.all(
+        metadata.map(datum =>
+          cloudinary.v2.uploader.destroy(datum._id, {
+            resource_type: datum.resource_type
+          })
+        )
+      );
+    } catch (err) {
+      throw new Error(`Cloudinary could not delete files: ${err.message}`);
+    }
+  }
+
+  async deleteEmptyResourceFolder(resourceId) {
+    try {
+      await cloudinary.v2.api.delete_folder(`${this.rootFolder}/${resourceId}`);
+      console.log(`Cloudinary deleted resource folder ${resourceId}`);
+    } catch (err) {
+      throw new Error(
+        `Cloudinary could not delete resource folder ${resourceId}: ${err.message}`
+      );
+    }
   }
 }
 
-export default {
-  addFiles,
-  updateFiles,
-  removeFiles
-}
+export default CloudinaryService.getInstance();
