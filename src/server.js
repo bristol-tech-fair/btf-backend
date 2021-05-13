@@ -1,6 +1,9 @@
 import express from 'express';
 import mongoose from 'mongoose';
+<<<<<<< HEAD
 import resourceRoutes from './resources';
+=======
+>>>>>>> 387abd7360c6c2b7cab78c86d08cc65b0f5a6ead
 import fileParser from './middleware/fileParser';
 import jsonParser from './middleware/jsonParser';
 import cloudinary from 'cloudinary';
