@@ -1,25 +1,18 @@
 import cloudinary from 'cloudinary';
 
 class CloudinaryService {
-  static instance;
-  rootFolder;
-
   constructor() {
-    this.rootFolder = 'bristol-tech-fair';
-  }
-
-  static getInstance() {
-    if (CloudinaryService.instance instanceof CloudinaryService) {
-      return CloudinaryService.instance;
-    } else {
+    if (!CloudinaryService.instance) {
       cloudinary.v2.config({
         cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
         api_key: process.env.CLOUDINARY_API_KEY,
         api_secret: process.env.CLOUDINARY_API_SECRET
       });
-      CloudinaryService.instance = new CloudinaryService();
-      return CloudinaryService.instance;
+      this.rootFolder = 'bristol-tech-fair';
+      CloudinaryService.instance = this;
     }
+
+    return CloudinaryService.instance;
   }
 
   async upload(files, resourceId) {
@@ -138,4 +131,7 @@ class CloudinaryService {
   }
 }
 
-export default CloudinaryService.getInstance();
+const instance = new CloudinaryService();
+Object.freeze(instance);
+
+export default instance;
