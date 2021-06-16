@@ -35,7 +35,7 @@ const options = {
 };
 
 export default [
-  multer(options).array('files'),
+  multer(options).array('attachments'),
   // This extra middleware parses any form field labelled 'json' into req.body if present
   (req, res, next) => {
     if (req.body.json) {
