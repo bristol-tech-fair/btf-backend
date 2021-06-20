@@ -15,13 +15,14 @@ const createOne = async (req, res) => {
           new: true
         });
       } catch (err) {
-        console.error(`File upload error: ${err.message}`);
+        console.log(`File upload error: ${err.message}`);
         throw err;
       }
     }
 
     res.status(201).send({ data: doc });
   } catch (err) {
+    console.log(`Internal server error: ${err.message}`);
     res.status(500).json({ msg: err.message });
   }
 };

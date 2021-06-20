@@ -3,27 +3,30 @@ import mongoose from 'mongoose';
 const learningResourceSchema = new mongoose.Schema({
   category: {
     type: String,
-    enum: ['Coding', 'Maths', 'Electronics', 'Design', 'Robotics'],
-    required: true
+    // enum: ['Coding', 'Maths', 'Electronics', 'Design', 'Robotics'],
+    // required: true
   },
   ages: {
     type: String,
-    required: true
+    // required: true
   },
   title: {
     type: String,
-    required: true,
-    unique: true
+    // required: true,
+    // unique: true
   },
-  rating: {
-    type: Number,
-    min: 0,
-    max: 5,
-    required: true
-  },
-  body: String,
-  tags: {
-    type: [String]
+  // rating: {
+  //   type: Number,
+  //   min: 0,
+  //   max: 5,
+    // required: true
+  // },
+  // body: String,
+  // tags: {
+    // type: [String]
+  // },
+  description: {
+    type: String
   },
   attachments: [
     {
