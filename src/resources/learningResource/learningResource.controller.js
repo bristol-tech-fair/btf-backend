@@ -7,22 +7,22 @@ const createOne = async (req, res) => {
     let doc = await LearningResource.create(req.body);
 
     // Upload files to Cloudinary if present
-    if (req.files.length !== undefined && req.files.length > 0) {
-      try {
-        const metadata = await cloudinaryService.upload(req.files, doc._id);
-        req.body = { ...req.body, attachments: metadata };
-        doc = await LearningResource.findByIdAndUpdate(doc._id, req.body, {
-          new: true
-        });
-      } catch (err) {
-        console.log(`File upload error: ${err.message}`);
-        throw err;
-      }
-    }
+    // if (req.files.length !== undefined && req.files.length > 0) {
+    //   try {
+    //     const metadata = await cloudinaryService.upload(req.files, doc._id);
+    //     req.body = { ...req.body, attachments: metadata };
+    //     doc = await LearningResource.findByIdAndUpdate(doc._id, req.body, {
+    //       new: true
+    //     });
+    //   } catch (err) {
+    //     console.log(`File upload error: ${err.message}`);
+    //     throw err;
+    //   }
+    // }
 
     res.status(201).send({ data: doc });
   } catch (err) {
-    console.log(`Internal server error: ${err.message}`);
+    console.log(err);
     res.status(500).json({ msg: err.message });
   }
 };
