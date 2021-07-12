@@ -1,30 +1,41 @@
 import mongoose from 'mongoose';
 
 const learningResourceSchema = new mongoose.Schema({
+  title: {
+    type: String
+  },
   category: {
-    type: String,
-    enum: ['Coding', 'Maths', 'Electronics'],
-    required: true
+    type: String
   },
   ages: {
-    type: String,
-    required: true
-  },
-  title: {
-    type: String,
-    required: true,
-    unique: true
+    type: String
   },
   rating: {
-    type: Number,
-    min: 0,
-    max: 5,
-    required: true
+    type: Number
   },
-  body: String,
+  color: {
+    type: String
+  },
+  to: {
+    type: String,
+    default: '/'
+  },
+  body: {
+    type: String
+  },
   tags: {
     type: [String]
-  }
+  },
+  description: {
+    type: String
+  },
+  attachments: [
+    {
+      _id: String,
+      resource_type: String,
+      secure_url: String
+    }
+  ]
 });
 
 export default mongoose.model('learningResource', learningResourceSchema);
