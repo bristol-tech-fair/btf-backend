@@ -7,7 +7,7 @@ if (errorsFound.error) {
 }
 
 export default {
-  port: process.env.PORT,
+  port: process.env.PORT || 3000,
   databaseURI: process.env.DB_CONNECTION,
   cloudinary: {
     cloudName: process.env.CLOUDINARY_CLOUD_NAME,

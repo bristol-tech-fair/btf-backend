@@ -6,9 +6,6 @@ import fileParser from './middleware/fileParser';
 
 const app = express();
 
-// set PORT value from environment variables or default 3000
-const PORT = config.port || 3000;
-
 // setup the database
 mongoose.connect(config.databaseURI, {
   useNewUrlParser: true,
@@ -27,4 +24,6 @@ app.use(fileParser);
 app.use('/api', resourceRoutes);
 
 // start the server
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(config.port, () =>
+  console.log(`Server running on port ${config.port}`)
+);
